@@ -120,11 +120,20 @@
 						.opacity(0);
 					}
 
-					&:hover .note-close {
+					.cuar-task-date-form{
+						padding: @base-padding;
+						background: #F5F5F5;
+						border-left: 1px solid @wp_line_bg;
+						border-bottom: 1px solid @wp_line_bg;
+						border-right: 1px solid @wp_line_bg;
+						display: none;
+					}
+
+					&:hover .note-close{
 						.opacity(1);
 					}
 
-					.content {
+					.cuar-task-list-content {
 						display: none;
 					}
 
@@ -132,6 +141,10 @@
 
 						a:not(.btn) {
 							background: #fff;
+						}
+
+						.cuar-task-date-form{
+							display: block;
 						}
 					}
 				}

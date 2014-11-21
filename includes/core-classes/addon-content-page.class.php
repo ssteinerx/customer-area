@@ -555,7 +555,9 @@ abstract class CUAR_AbstractContentPageAddOn extends CUAR_AbstractPageAddOn {
   		$out = ob_get_contents();
   		ob_end_clean(); 
   		
-  		return $content . $out;
+  		$original_content = apply_filters( 'cuar/private-content/view/original_content', $content, $this );
+        $original_content = apply_filters( 'cuar/private-content/view/original_content?post-type=' . $this->get_friendly_post_type(), $original_content, $this );
+        return $original_content . $out;
 	}
 	
 	protected function print_additional_private_content_footer() {}

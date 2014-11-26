@@ -7,25 +7,22 @@
 	}
 	
 	.cuar-tasklist-wrapper {
-		@wp_width: 60%;
 		@wp_bg: #fff;
 		@nl_bg: #ededed;
 		@wp_line_bg: darken(@nl_bg, 5%);
 		
 		position: relative;
-		//background: @nl_bg;
-		//border: 1px solid @default-border-color;
 		&:extend(.clearfix all);
 		
 		.write-pad, .cuar-tasklist-list {
 			.box-sizing(border-box);
 		}
 		
-		.cuar-tasklist-list {												margin: 0;			
+		.cuar-tasklist-list {
+			.row;
+
 			#cuar-tasklist-list-sidebar{
-				width: 100% - @wp_width;
-				padding-right: @base-margin;
-				float: left;
+				.make-sm-column(4);
 
 				> ul{
 					position: relative;
@@ -37,7 +34,7 @@
 
 				.cuar-tasklist-metas{
 					.panel-title, .meta-buttons{
-						.make-sm-column(6);
+						.make-xs-column(6);
 					}
 
 					.panel-heading{
@@ -65,22 +62,24 @@
 							}
 						}
 					}
-				}
-
-				
-
-					
+				}			
 				
 			}
 
 			#cuar-tasklist-list-items{
-				width: @wp_width;
-				padding: 0;
-				float: left;
+				.make-sm-column(8);
+
 				.cuar-task{
 					margin-bottom: @base-margin;
+
 					&.current {
 						.box-shadow(0px 0px 10px @default-border-color);
+					}
+
+					&.completed {
+						.cuar-task-list-title, .cuar-task-list-description {
+							text-decoration: line-through;
+						}
 					}
 				}	
 			}
@@ -272,26 +271,22 @@
 
 
 // Medium Screens
-@media (max-width: @screen-md-min) {
+@media (max-width: @screen-sm-max) {
 
 	.cuar-tasklist-task-list {
 		
 		.cuar-tasklist-wrapper {
-			@wp_width: 65%;
-			
-			.cuar-tasklist-list {
-				width: 100% - @wp_width;
-			}
 		
 			.write-pad {
-				width: @wp_width;
-				
-				textarea {
-					padding-left: 50px;
-				}
-				
-				&:after {
-					left: 35px;
+				.cuar-writepad-panel-body{
+
+					&:after {
+						left: 17px;
+					}
+
+					textarea{
+						padding-left: 35px;
+					}
 				}
 			}
 		}
@@ -299,17 +294,11 @@
 }
 
 // Small Screens
-@media (max-width: @screen-sm-min) {
+@media (max-width: @screen-xs-max) {
 	
 	body .cuar-tasklist-task-list {
 		
 		.cuar-tasklist-wrapper {
-			@wp_width: 100%;
-			
-			.cuar-tasklist-list, .write-pad {
-				width: 100%;
-				float: none;
-			}
 			
 			.cuar-tasklist-list {
 				padding-bottom: @base_padding;
@@ -335,135 +324,10 @@
 			.write-pad {
 				
 				textarea {
-					min-height: 400px; 
-					max-height: 600px; 
+					min-height: 400px!important; 
+					max-height: 600px!important; 
 				}
 			}
 		}
 	}
 }
-
-// Tasklist info in the single post footer
-// --------------------------------------------------
-
-.cuar-single-post-footer.cuar-tasklist {
-	.content-meta {
-		.author, .owner, .date {
-				.make-sm-column(4);
-				.make-xs-column(12);
-		}
-	}
-	
-	.project-progress {
-			.make-xs-column(12);
-	}
-}
-
-// List of task within a task list single post
-// --------------------------------------------------
-
-.cuar-tasklist-task-list {
-	
-		margin-top: 20px;
-		
-	.cuar-task {
-			position: relative;
-		
-		.description {
-			p:last-child {
-					margin-bottom: 10px;
-			}
-		}
-		
-		.footer {
-				opacity: 0.8;
-				font-style: italic;
-				font-size: 80%;
-				
-			.dashicons, .dashicons-before:before {
-					width: 15px;
-					height: 15px;
-					font-size: 15px;
-			}
-		}
-		
-		&.completed {
-			.description {
-					opacity: 0.8;
-					text-decoration: line-through;
-			}
-		}
-	}
-}
-
-// Add a task with AJAX
-// --------------------------------------------------
-
-.cuar-tasklist-task-list {
-	.cuar-task.cuar-task-editable {
-		.panel, .panel:hover {
-			padding: 0;
-		}
-		
-		.cuar-header {
-				position: relative;
-				padding: 15px;
-			.cuar-title {
-			}
-			.cuar-actions {
-					position: absolute;
-					right: 15px;		
-					top: 15px;
-			}
-		}
-		
-		.cuar-content {
-				padding: 15px;
-				border-top: 1px solid #ddd;
-				border-right: 1px solid #ddd;
-				background: #fafafa;
-				
-			.cuar-left {
-					float: left; 
-					width: 60%;				
-			}
-			.cuar-right {
-					float: left; 
-					width: 35%;		
-					margin-left: 4%;				
-			}
-		}
-		
-		.cuar-check-task {
-				margin: 10px;
-		}
-		
-		.btn-update-task {
-			margin-top: 15px;
-		}
-		
-		.cuar-round-button {	
-				display: inline-block;
-				.square(26px);		
-				.img-rounded;
-				margin-left: 5px;
-				color: #333;
-				background: #efefef;
-				padding: 3px;
-			&:hover {
-				background: #d0d0d0;
-			}
-		}
-	}
-}
-
-.cuar-form.cuar-add-task-form {
-	.control-container {
-			width: 100%;
-			margin: 0;
-	}
-	
-	.save-task {
-		margin-top: 45px;
-	}
-} 

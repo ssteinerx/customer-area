@@ -7,7 +7,7 @@
 	}
 	
 	.cuar-tasklist-wrapper {
-		@wp_width: 74%;
+		@wp_width: 60%;
 		@wp_bg: #fff;
 		@nl_bg: #ededed;
 		@wp_line_bg: darken(@nl_bg, 5%);
@@ -21,12 +21,69 @@
 			.box-sizing(border-box);
 		}
 		
-		.cuar-tasklist-list {
-			float: left;
-			width: 100% - @wp_width;			
-			margin: 0;
-			padding: 0;
-			padding-bottom: @base-margin;
+		.cuar-tasklist-list {												margin: 0;			
+			#cuar-tasklist-list-sidebar{
+				width: 100% - @wp_width;
+				padding-right: @base-margin;
+				float: left;
+
+				> ul{
+					position: relative;
+				}
+
+				.panel-title{
+						margin: @base-padding/2 0;	
+					}				
+
+				.cuar-tasklist-metas{
+					.panel-title, .meta-buttons{
+						.make-sm-column(6);
+					}
+
+					.panel-heading{
+						.row;
+					}
+
+					.cuar-single-post-actions{
+						margin: 0;
+					}
+
+					.meta-buttons{
+						text-align: right;
+
+						a{
+							text-indent: -999em;
+							overflow: hidden;
+							position: relative;
+							margin-left: @base-padding;
+							font-size: @font-size-small;
+
+							span{
+								position: absolute;
+								left: 2px;
+								text-indent: 0;
+							}
+						}
+					}
+				}
+
+				
+
+					
+				
+			}
+
+			#cuar-tasklist-list-items{
+				width: @wp_width;
+				padding: 0;
+				float: left;
+				.cuar-task{
+					margin-bottom: @base-margin;
+					&.current {
+						.box-shadow(0px 0px 10px @default-border-color);
+					}
+				}	
+			}
 
 			.bullet{
 				padding: 0 5px 0 0;
@@ -38,23 +95,18 @@
 				input[type="checkbox"]{
 					margin: 0;
 				}
-			}
+			}			
 			
 			ul {
 				margin: 0;
 				padding: 0;
 				width: 100%;
-				list-style: none;
+				list-style: none;				
 
 				li {
 					position: relative;
-					//padding: @base_margin;
-					padding-right: @base-padding;
-					padding-bottom: @base-padding;
 
-					&.meta-buttons{
-						background: #f5f5f5;
-					}
+					
 
 					a:not(.btn) {
 						display: block;
@@ -106,9 +158,9 @@
 						}
 					}
 
-					.note-close {
+					.cuar-delete-task {
 						position: absolute;
-						right: 1px + @base-padding;
+						right: 1px;
 						top: 1px;
 						border: none;
 						background: none;
@@ -129,7 +181,7 @@
 						display: none;
 					}
 
-					&:hover .note-close{
+					&:hover .cuar-delete-task{
 						.opacity(1);
 					}
 
@@ -162,20 +214,24 @@
 		}
 		
 		.write-pad {
-			float: right;
-			width: @wp_width;
 			background: @wp_bg;
 			position: relative;
+			clear: both;
 							
-			&:after {
-				display: block;
-				content: '';
-				position: absolute;
-				left: 95px;
-				top: 0;
-				bottom: 0;
-				background: #f9d4d1;
-				width: 1px;
+			.cuar-writepad-panel-body{
+				position: relative;
+				padding: 0;				
+				
+				&:after {
+					display: block;
+					content: '';
+					position: absolute;
+					left: 45px;
+					top: 0;
+					bottom: 0;
+					background: #f9d4d1;
+					width: 1px;
+				}
 			}
 			
 			textarea {
@@ -183,13 +239,16 @@
 				border: none;
 				background: url(images/notes-lines.png) left top;
 				background-attachment: local;
-				min-height: 780px;
+				min-height: 300px;
 				font: 14px/52px @font-family-sans-serif, serif;
-				border: 1px solid @default-border-color;
-				max-height: 1500px;
-				padding-left: 125px;
+				border: 0;
+				padding-left: 85px;
 				padding-right: 50px;
 				
+				&:active, &:hover, &:focus{
+					outline: 0;
+					box-shadow: none;
+				}
 				&::-webkit-scrollbar {
 			            width: 5px;
 			    }
@@ -266,7 +325,7 @@
 						}
 					}
 					
-					.note-close {
+					.cuar-delete-task {
 						right: 1px;
 						top: @base-padding + 1;
 					}

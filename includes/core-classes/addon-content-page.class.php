@@ -487,20 +487,13 @@ abstract class CUAR_AbstractContentPageAddOn extends CUAR_AbstractPageAddOn {
 					$this->get_slug() . "-content-empty.template.php" ));
 		}
 	}
-	
-	/*------- SINGLE POST PAGES -------------------------------------------------------------------------------------*/
-	
-	public function print_single_private_content_action_links( $content ) {		
-		// If theme is taking care of it, don't do anything
-		$theme_support = get_theme_support( 'customer-area.single-post-templates' );
-		if ( is_array( $theme_support ) && in_array( $this->get_friendly_post_type(), $theme_support[0] ) ) return $content;	
-		
-		// If not on a matching post type, we do nothing
-		if ( !is_singular( $this->get_friendly_post_type() ) ) return $content;		
-		if ( get_post_type()!=$this->get_friendly_post_type() ) return $content;	
 
-		ob_start();
-		
+	public function print_action_links() {
+
+		// If not on a matching post type, we do nothing
+		if ( !is_singular( $this->get_friendly_post_type() ) ) return;		
+		if ( get_post_type()!=$this->get_friendly_post_type() ) return;
+
 		do_action( 'cuar/private-content/view/before_action_links', $this );
 		do_action( 'cuar/private-content/view/before_action_links?post-type=' . $this->get_friendly_post_type(), $this );
 
@@ -518,10 +511,27 @@ abstract class CUAR_AbstractContentPageAddOn extends CUAR_AbstractPageAddOn {
 		
 		do_action( 'cuar/private-content/view/after_action_links', $this );
 		do_action( 'cuar/private-content/view/after_action_links?post-type=' . $this->get_friendly_post_type(), $this );
+
+	}
+	
+	/*------- SINGLE POST PAGES -------------------------------------------------------------------------------------*/
+	
+	public function print_single_private_content_action_links( $content ) {		
+		// If theme is taking care of it, don't do anything
+		$theme_support = get_theme_support( 'customer-area.single-post-templates' );
+		if ( is_array( $theme_support ) && in_array( $this->get_friendly_post_type(), $theme_support[0] ) ) return $content;
+
+		if ( apply_filters( 'cuar/private-content/view/hide_action_links?post-type=' . $this->get_friendly_post_type(), false ) ) {
+            return $content;
+        }
+
+		ob_start();
+		
+		$this->print_action_links();
 		
   		$out = ob_get_contents();
-  		ob_end_clean(); 
-  		
+  		ob_end_clean();
+
   		return $out . $content;
 	}
 	
@@ -534,7 +544,11 @@ abstract class CUAR_AbstractContentPageAddOn extends CUAR_AbstractPageAddOn {
 		if ( !is_singular( $this->get_friendly_post_type() ) ) return $content;		
 		if ( get_post_type()!=$this->get_friendly_post_type() ) return $content;	
 
-		ob_start();
+		if ( apply_filters( 'cuar/private-content/view/hide_single_footer?post-type=' . $this->get_friendly_post_type(), false ) ) {
+            return $content;
+        }
+
+        ob_start();
 		
 		do_action( 'cuar/private-content/view/before_footer', $this );
 		do_action( 'cuar/private-content/view/before_footer?post-type=' . $this->get_friendly_post_type(), $this );
@@ -555,9 +569,7 @@ abstract class CUAR_AbstractContentPageAddOn extends CUAR_AbstractPageAddOn {
   		$out = ob_get_contents();
   		ob_end_clean(); 
   		
-  		$original_content = apply_filters( 'cuar/private-content/view/original_content', $content, $this );
-        $original_content = apply_filters( 'cuar/private-content/view/original_content?post-type=' . $this->get_friendly_post_type(), $original_content, $this );
-        return $original_content . $out;
+  		return $content . $out;
 	}
 	
 	protected function print_additional_private_content_footer() {}

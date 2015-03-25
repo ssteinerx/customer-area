@@ -4,12 +4,12 @@ Contributors:       vprat, marvinlabs
 Donate link:        http://www.marvinlabs.com/donate/
 Tags:               private files,client area,customer area,user files,secure area,crm,project,project management,access control
 Requires at least:  3.6
-Tested up to:       4.1
+Tested up to:       4.1.1
 Stable tag:         6.0.0
 License:            GPLv2 or later
 License URI:        http://www.gnu.org/licenses/gpl-2.0.html
 
-Give your customers a page on your site where they can access private content (files, notices, ...). 
+WP Customer Area is a modular all-in-one solution to manage private content with WordPress.
 
 == Description ==
 
@@ -20,10 +20,8 @@ one or multiple users is one of the main feature provided by our easy-to-use plu
 * [Add-ons](http://wp-customerarea.com/add-ons-and-themes/)
 * [Documentation](http://wp-customerarea.com/documentation/)
 * [Translations](http://wp-customerarea.com/documentation/)
-
 * [Support](http://wp-customerarea.com/support)
 * [FAQ](http://wp-customerarea.com/faq/)
-
 * [GitHub repository for contributors](https://github.com/marvinlabs/customer-area)
 * [Issue tracker](https://github.com/marvinlabs/customer-area/issues)
 
@@ -129,7 +127,7 @@ feel free to fork the project and send us pull requests!
 
 == Changelog ==
 
-= 6.0.0 (2015/02/) =
+= 6.0.0 (2015/03/10) =
 
 * New: a setup assistant for first time installation & about page to introduce new versions features
 * New: support for the new website at http://wp-customerarea.com
@@ -142,6 +140,8 @@ feel free to fork the project and send us pull requests!
 * Fix: the function cuar_is_customer_area_private_content was not returning true for private containers (such as projects)
 * Fix: an email validation bug for additional profile fields created by code
 * Fix: improved detection of main plugin errors (not installed, disabled) for add-ons.
+* Fix: the widgets have been made more flexible to be able to override the output by using templates
+* Fix: the term list widget was not properly printing child terms
 
 = 5.0.7 (2014/07/31) =
 

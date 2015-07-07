@@ -25,9 +25,11 @@ $extra_class = apply_filters( 'cuar/templates/list-item/extra-class?post-type=' 
             <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( $title_popup ); ?>"><?php the_title(); ?></a>
         </div>
 
+        <!--        Removed: SS: July 7, 2015
         <div class="subtitle">
-            <a href="<?php the_permalink(); ?>" title="<?php echo esc_attr( $subtitle_popup ); ?>"><?php echo $subtitle; ?></a>
-        </div>
+                    <a href="< ?php the_permalink(); ?>" title="< ?php echo esc_attr( $subtitle_popup ); ?>">< ?php echo $subtitle; ?></a>
+                </div>
+         -->
 
         <?php 	if ( has_post_thumbnail( get_the_ID() ) ) : ?>
             <div class="cover">

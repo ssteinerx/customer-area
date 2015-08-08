@@ -309,7 +309,8 @@ function cuar_format_human_file_size($size)
 
 /**
  * @param array $args The arguments to pass to each cuar_create_private_file function call.
- *
+ * @param bool  delete_after_copy 
+ *                         TRUE to delete source files after copy, FALSE to leave in place. Defaults to FALSE.
  * ´cuar_bulk_create_private_files(array(
  *      array(
  *          'post_data' => (...),
@@ -320,12 +321,13 @@ function cuar_format_human_file_size($size)
  *          'post_data' => (...),
  *          'owner'     => (...),
  *          'files'     => (...),
- *      ))
+ *      )),
+ *      true
  * );´
  *
  * @return array An array containing the created post IDs and the errors
  */
-function cuar_bulk_create_private_files($args)
+function cuar_bulk_create_private_files($args, $delete_after_copy=false)
 {
     $result = array(
         'created' => array(),
@@ -334,7 +336,7 @@ function cuar_bulk_create_private_files($args)
 
     foreach ($args as $a)
     {
-        $res = cuar_create_private_file($a['post_data'], $a['owner'], $a['files']);
+        $res = cuar_create_private_file($a['post_data'], $a['owner'], $a['files'], $delete_after_copy);
         if (is_wp_error($res))
         {
             $result['errors'][] = $res;
@@ -355,6 +357,8 @@ function cuar_bulk_create_private_files($args)
  *                         of corresponding objects
  * @param array $files     An array containing the paths to the files to attache to the post object. Currently we only
  *                         support a single file.
+ * @param bool  delete_after_copy 
+ *                         TRUE to delete source files after copy, FALSE to leave in place. Defaults to FALSE.
  *
  * @return int¦WP_Error the post ID if the function could insert the post, else, a WP_Error object
  *
@@ -370,14 +374,15 @@ function cuar_bulk_create_private_files($args)
  *      ),
  *      array(
  *          '/path/to/file/on/server/the-file.txt'
- *      )
+ *      ),
+ *      true
  * );´
  */
-function cuar_create_private_file($post_data, $owner, $files)
+function cuar_create_private_file($post_data, $owner, $files, $delete_after_copy=false)
 {
     if (count($files) != 1)
     {
-        return new WP_Error(0, 'cuar_create_private_file only support a single private file');
+        return new WP_Error(0, 'cuar_create_private_file only supports a single private file');
     }
 
     if ( !isset($owner['type']) || !isset($owner['ids']) || empty($owner['ids']))
@@ -403,7 +408,7 @@ function cuar_create_private_file($post_data, $owner, $files)
     $pf_addon = cuar_addon('private-files');
     foreach ($files as $file)
     {
-        $upload_result = $pf_addon->handle_copy_private_file_from_local_folder($post_id, null, $owner, $file);
+        $upload_result = $pf_addon->handle_copy_private_file_from_local_folder($post_id, null, $owner, $file, $delete_after_copy);
 
         if ($upload_result !== true)
         {
